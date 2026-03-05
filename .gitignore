@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+data/
+memory/*/
+!memory/SOUL.md
+!memory/TOOLS.md
+*.log
+.DS_Store
